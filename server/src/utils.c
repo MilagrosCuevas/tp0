@@ -5,7 +5,7 @@ t_log* logger;
 int iniciar_servidor(void)
 {
 	// Quitar esta línea cuando hayamos terminado de implementar la funcion
-	assert(!"no implementado!");
+	
 
 	int socket_servidor;
 
@@ -19,10 +19,16 @@ int iniciar_servidor(void)
 	getaddrinfo(NULL, PUERTO, &hints, &servinfo);
 
 	// Creamos el socket de escucha del servidor
+	int fd_escucha = socket(serverinfo->ai_family,
+                        serverinfo->ai_socktype,
+                        serverinfo->ai_protocol);
 
 	// Asociamos el socket a un puerto
+	err = bind(fd_escucha, serverinfo->ai_addr, serverinfo->ai_addrlen);
+
 
 	// Escuchamos las conexiones entrantes
+	err = listen(fd_escucha, SOMAXCONN);
 
 	freeaddrinfo(servinfo);
 	log_trace(logger, "Listo para escuchar a mi cliente");
